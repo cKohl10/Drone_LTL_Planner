@@ -1,3 +1,0 @@
-cd build <- Go to the build directory
-make <- compile with cmake
-./main <- call the main executable
