@@ -1,0 +1,2 @@
+/usr/bin/ar qc libhelper_functions.a  CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.o CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.o
+/usr/bin/ranlib libhelper_functions.a

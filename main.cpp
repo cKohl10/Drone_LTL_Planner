@@ -57,6 +57,32 @@
  namespace ob = ompl::base;
  namespace og = ompl::geometric;
  namespace oc = ompl::control;
+
+class MyDecomposition : public oc::PropositionalDecomposition
+{
+    public:
+        MyDecomposition(oc::DecompositionPtr &decomp)
+            : oc::PropositionalDecomposition(decomp) {}
+
+        ~MyDecomposition() override = default;
+  
+        /** \brief Project a given State to a set of coordinates in R^k, where k is the dimension of this
+             * Decomposition. */
+        void project(const ob::State* s, std::vector<double>& coord) const override
+        {
+            coord.resize(2);
+            coord[0] = s->as<ob::SE2StateSpace::StateType>()->getX();
+            coord[1] = s->as<ob::SE2StateSpace::StateType>()->getY();
+        }
+    
+        /** \brief Samples a State using a projected coordinate and a StateSampler. */
+        void sampleFullState(const ob::StateSamplerPtr& sampler, const std::vector<double>& coord, ob::State* s) const override
+        {
+            sampler->sampleUniform(s);
+            auto* ws = s->as<ob::SE2StateSpace::StateType>();
+            ws->setXY(coord[0], coord[1]);
+        }
+};
   
  bool isStateValid(const ob::State *state)
  {
