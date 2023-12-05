@@ -49,13 +49,13 @@
  void addPropositions(std::shared_ptr<MyPropDecomposition> &decomp)
  {
     //Specify the region for each proposition
-    int p0 = 3;
+    int p0 = 0;
     decomp->addProposition(p0);
 
-    int p1 = 5;
+    int p1 = 2;
     decomp->addProposition(p1);
 
-    int p2 = 7;
+    int p2 = 3;
     decomp->addProposition(p2);
  }
   
@@ -77,6 +77,7 @@
      const ob::State *state)
  {
      if (!si->satisfiesBounds(state))
+        std::cout << "State does not satisfy bounds" << std::endl;
          return false;
     //  const auto* se2 = state->as<ob::SE2StateSpace::StateType>();
   
@@ -112,7 +113,7 @@
  void plan()
  {
     // Grid Space Parameters
-    int length = 3; // Number of grid cells along each axis
+    int length = 2; // Number of grid cells along each axis
     int dim = 2; // Number of dimensions
 
     // construct the state space we are planning in
@@ -120,8 +121,8 @@
 
     // set the bounds for the R^2 part of SE(2)
     ob::RealVectorBounds bounds(dim);
-    bounds.setLow(0);
-    bounds.setHigh(3);
+    bounds.setLow(-0.5);
+    bounds.setHigh(0.5);
 
     space->setBounds(bounds);
   
@@ -179,60 +180,75 @@
  #endif
   
     
-     // construct product graph (propDecomp x A_{cosafety} x A_{safety})
-     auto product(std::make_shared<oc::ProductGraph>(ptd, cosafety, safety));
+    // construct product graph (propDecomp x A_{cosafety} x A_{safety})
+    auto product(std::make_shared<oc::ProductGraph>(ptd, cosafety, safety));
 
+
+    // LTLSpaceInformation creates a hybrid space of robot state space x product graph.
+    // It takes the validity checker from SpaceInformation and expands it to one that also
+    // rejects any hybrid state containing rejecting automaton states.
+    // It takes the state propagator from SpaceInformation and expands it to one that
+    // follows continuous propagation with setting the next decomposition region
+    // and automaton states accordingly.
+    //
+    // The robot state space, given by SpaceInformation, is referred to as the "lower space".
+    auto ltlsi(std::make_shared<oc::LTLSpaceInformation>(si, product));
+
+
+    // LTLProblemDefinition creates a goal in hybrid space, corresponding to any
+    // state in which both automata are accepting
+    auto pdef(std::make_shared<oc::LTLProblemDefinition>(ltlsi));
+
+
+    // create a start state
+    ob::ScopedState<ob::SE2StateSpace> start(space);
+    start->setX(0.2);
+    start->setY(0.2);
+    start->setYaw(0.0);
+
+    // addLowerStartState accepts a state in lower space, expands it to its
+    // corresponding hybrid state (decomposition region containing the state, and
+    // starting states in both automata), and adds that as an official start state.
+    pdef->addLowerStartState(start.get());
+
+    //LTL planner (input: LTL space information, product automaton)
+    oc::LTLPlanner ltlPlanner(ltlsi, product);
+    ltlPlanner.setProblemDefinition(pdef);
+
+    // attempt to solve the problem within thirty seconds of planning time
+    // considering the above cosafety/safety automata, a solution path is any
+    // path that visits p2 followed by p0 while avoiding obstacles and avoiding p1.
+    ltlPlanner.printProperties(std::cout);
+    ltlPlanner.printSettings(std::cout);
+    ltlPlanner.checkValidity();
+    ob::PlannerStatus solved = ltlPlanner.ob::Planner::solve(10.0);
+
+     //DEBUG planner
+    // std::vector<ob::State *> tree;
+    // ltlPlanner.getTree(tree);
+    // std::cout << "Tree size: " << tree.size() << std::endl;
+    // for (int i = 0; i < 10; i++){
+    //     //Get the X and Y coordinates of each state in the tree
+    //     const auto* se2 = tree[i]->as<ob::SE2StateSpace::StateType>();
+    //     double x = se2->getX();
+    //     double y = se2->getY();
+    //     std::cout << "State " << i << " X: " << x << " Y: " << y << std::endl;
+    // }
+
+    //Get the high level path of the planner:
     
-     // LTLSpaceInformation creates a hybrid space of robot state space x product graph.
-     // It takes the validity checker from SpaceInformation and expands it to one that also
-     // rejects any hybrid state containing rejecting automaton states.
-     // It takes the state propagator from SpaceInformation and expands it to one that
-     // follows continuous propagation with setting the next decomposition region
-     // and automaton states accordingly.
-     //
-     // The robot state space, given by SpaceInformation, is referred to as the "lower space".
-     auto ltlsi(std::make_shared<oc::LTLSpaceInformation>(si, product));
   
-    
-     // LTLProblemDefinition creates a goal in hybrid space, corresponding to any
-     // state in which both automata are accepting
-     auto pdef(std::make_shared<oc::LTLProblemDefinition>(ltlsi));
-  
-    
-     // create a start state
-     ob::ScopedState<ob::SE2StateSpace> start(space);
-     start->setX(0.2);
-     start->setY(0.2);
-     start->setYaw(0.0);
-  
-     // addLowerStartState accepts a state in lower space, expands it to its
-     // corresponding hybrid state (decomposition region containing the state, and
-     // starting states in both automata), and adds that as an official start state.
-     pdef->addLowerStartState(start.get());
-    
-     //LTL planner (input: LTL space information, product automaton)
-     oc::LTLPlanner ltlPlanner(ltlsi, product);
-     ltlPlanner.setProblemDefinition(pdef);
-    
-     // attempt to solve the problem within thirty seconds of planning time
-     // considering the above cosafety/safety automata, a solution path is any
-     // path that visits p2 followed by p0 while avoiding obstacles and avoiding p1.
-     ltlPlanner.printProperties(std::cout);
-     ltlPlanner.printSettings(std::cout);
-     ltlPlanner.checkValidity();
-     ob::PlannerStatus solved = ltlPlanner.ob::Planner::solve(30.0);
-  
-     if (solved)
-     {
-         std::cout << "Found solution:" << std::endl;
-         // The path returned by LTLProblemDefinition is through hybrid space.
-         // getLowerSolutionPath() projects it down into the original robot state space
-         // that we handed to LTLSpaceInformation.
-         static_cast<oc::PathControl &>(*pdef->getLowerSolutionPath()).printAsMatrix(std::cout);
-     }
-     else
-         std::cout << "No solution found" << std::endl;
-         //static_cast<oc::PathControl &>(*pdef->getLowerSolutionPath()).printAsMatrix(std::cout);
+    if (solved)
+    {
+        std::cout << "Found solution:" << std::endl;
+        // The path returned by LTLProblemDefinition is through hybrid space.
+        // getLowerSolutionPath() projects it down into the original robot state space
+        // that we handed to LTLSpaceInformation.
+        static_cast<oc::PathControl &>(*pdef->getLowerSolutionPath()).printAsMatrix(std::cout);
+    }
+    else
+        std::cout << "No solution found" << std::endl;
+        //static_cast<oc::PathControl &>(*pdef->getLowerSolutionPath()).printAsMatrix(std::cout);
     
  }
   

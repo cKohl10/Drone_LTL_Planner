@@ -12,6 +12,7 @@ void MyGridDecomposition::project(const ob::State* s, std::vector<double>& coord
     coord.resize(2);
     coord[0] = s->as<ob::SE2StateSpace::StateType>()->getX();
     coord[1] = s->as<ob::SE2StateSpace::StateType>()->getY();
+    //std::cout << "Projecting state: " << coord[0] << ", " << coord[1] << " in region: " << coordToRegion(coord) <<std::endl;
 }
 
 void MyGridDecomposition::sampleFullState(const ob::StateSamplerPtr& sampler, const std::vector<double>& coord, ob::State* s) const
@@ -37,6 +38,14 @@ void MyGridDecomposition::print()
             std::cout << coord[j] << " ";
         }
         std::cout << std::endl <<" - Region " << i <<" Volume: " << getRegionVolume(i) << std::endl;
+
+        //Output the bounds of the region
+        std::cout << " - Region " << i << " Bounds: ";
+        const ob::RealVectorBounds& bounds = getRegionBounds(i);
+        for (int j = 0; j < bounds.low.size(); j++)
+        {
+            std::cout << "Dim " << j+1 << ": (" << bounds.low[j] << ", " << bounds.high[j] << ") ";
+        }
         std::cout << std::endl;
     }
 }

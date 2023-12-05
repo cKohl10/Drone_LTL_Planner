@@ -60,15 +60,15 @@ include CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/LTLTest2.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/LTLTest2.cpp.o: ../LTLTest2.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mini/Drone_LTL_Planner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main.dir/LTLTest2.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/LTLTest2.cpp.o -c /home/mini/Drone_LTL_Planner/LTLTest2.cpp
+	/usr/lib/ccache/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/LTLTest2.cpp.o -c /home/mini/Drone_LTL_Planner/LTLTest2.cpp
 
 CMakeFiles/main.dir/LTLTest2.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/LTLTest2.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mini/Drone_LTL_Planner/LTLTest2.cpp > CMakeFiles/main.dir/LTLTest2.cpp.i
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mini/Drone_LTL_Planner/LTLTest2.cpp > CMakeFiles/main.dir/LTLTest2.cpp.i
 
 CMakeFiles/main.dir/LTLTest2.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/LTLTest2.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mini/Drone_LTL_Planner/LTLTest2.cpp -o CMakeFiles/main.dir/LTLTest2.cpp.s
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mini/Drone_LTL_Planner/LTLTest2.cpp -o CMakeFiles/main.dir/LTLTest2.cpp.s
 
 # Object files for target main
 main_OBJECTS = \

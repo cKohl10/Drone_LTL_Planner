@@ -60,28 +60,28 @@ include CMakeFiles/helper_functions.dir/flags.make
 CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.o: CMakeFiles/helper_functions.dir/flags.make
 CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.o: ../src/MyGridDecomposition.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mini/Drone_LTL_Planner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.o -c /home/mini/Drone_LTL_Planner/src/MyGridDecomposition.cpp
+	/usr/lib/ccache/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.o -c /home/mini/Drone_LTL_Planner/src/MyGridDecomposition.cpp
 
 CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mini/Drone_LTL_Planner/src/MyGridDecomposition.cpp > CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.i
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mini/Drone_LTL_Planner/src/MyGridDecomposition.cpp > CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.i
 
 CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mini/Drone_LTL_Planner/src/MyGridDecomposition.cpp -o CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.s
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mini/Drone_LTL_Planner/src/MyGridDecomposition.cpp -o CMakeFiles/helper_functions.dir/src/MyGridDecomposition.cpp.s
 
 CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.o: CMakeFiles/helper_functions.dir/flags.make
 CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.o: ../src/MyPropDecomposition.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mini/Drone_LTL_Planner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.o -c /home/mini/Drone_LTL_Planner/src/MyPropDecomposition.cpp
+	/usr/lib/ccache/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.o -c /home/mini/Drone_LTL_Planner/src/MyPropDecomposition.cpp
 
 CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mini/Drone_LTL_Planner/src/MyPropDecomposition.cpp > CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.i
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mini/Drone_LTL_Planner/src/MyPropDecomposition.cpp > CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.i
 
 CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mini/Drone_LTL_Planner/src/MyPropDecomposition.cpp -o CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.s
+	/usr/lib/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mini/Drone_LTL_Planner/src/MyPropDecomposition.cpp -o CMakeFiles/helper_functions.dir/src/MyPropDecomposition.cpp.s
 
 # Object files for target helper_functions
 helper_functions_OBJECTS = \
