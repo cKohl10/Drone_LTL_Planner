@@ -36,6 +36,7 @@
 #include "src/includeCore.h"
 #include "src/MyGridDecomposition.h"
 #include "src/MyPropDecomposition.h"
+#include <fstream>
   
  namespace ob = ompl::base;
  namespace oc = ompl::control;
@@ -49,14 +50,20 @@
  void addPropositions(std::shared_ptr<MyPropDecomposition> &decomp)
  {
     //Specify the region for each proposition
-    int p0 = 0;
+    int p0 = 3;
     decomp->addProposition(p0);
 
-    int p1 = 2;
+    int p1 = 14;
     decomp->addProposition(p1);
 
-    int p2 = 3;
+    int p2 = 21;
     decomp->addProposition(p2);
+
+    int p3 = 7;
+    decomp->addProposition(p3);
+
+    int p4 = 9;
+    decomp->addProposition(p4);
  }
   
  /* Returns whether a point (x,y) is within a given polygon.
@@ -72,13 +79,14 @@
     and checks for collisions against them.
     This is to prevent us from having to redefine the obstacles in multiple places. */
  bool isStateValid(
-     const oc::SpaceInformation *si,
-     const std::shared_ptr<oc::PropositionalDecomposition> &decomp,
-     const ob::State *state)
+    const oc::SpaceInformation *si,
+    const std::shared_ptr<oc::PropositionalDecomposition> &decomp,
+    const ob::State *state)
  {
-     if (!si->satisfiesBounds(state))
-        std::cout << "State does not satisfy bounds" << std::endl;
-         return false;
+    if (!si->satisfiesBounds(state)){
+        //std::cout << "State does not satisfy bounds" << std::endl;
+        return false;
+    }
     //  const auto* se2 = state->as<ob::SE2StateSpace::StateType>();
   
     //  double x = se2->getX();
@@ -89,7 +97,7 @@
     //      if (polyContains(obstacle, x, y))
     //          return false;
     //  }
-     return true;
+    return true;
  }
   
  void propagate(const ob::State *start, const oc::Control *control, const double duration, ob::State *result)
@@ -109,11 +117,33 @@
      ob::SO2StateSpace SO2;
      SO2.enforceBounds (so2out);
  }
+
+ void printProblem(std::shared_ptr<MyPropDecomposition> ptd, int len, ob::RealVectorBounds bounds){
+        //Open the file to save the problem stats
+        std::ofstream myfile;
+
+        //Open the file
+        myfile.open("problem.txt");
+
+        //Write the problem stats to the file
+        myfile << "dimensions, " << ptd->getDimension() << std::endl; 
+        myfile << "length, " << len << std::endl;
+        myfile << "bounds_low, " << bounds.low[0] << std::endl;
+        myfile << "bounds_high, " << bounds.high[0] << std::endl;
+        //Add the propositions
+        myfile << "propositions, " << ptd->getNumProps() << std::endl;
+        for (int i = 0; i < ptd->getNumProps(); i++){
+            myfile << "proposition_" << i << ", " << ptd->getProposition(i) << std::endl;
+        }
+        
+        //Close the file
+        myfile.close();
+ }
   
  void plan()
  {
     // Grid Space Parameters
-    int length = 2; // Number of grid cells along each axis
+    int length = 5; // Number of grid cells along each axis
     int dim = 2; // Number of dimensions
 
     // construct the state space we are planning in
@@ -121,8 +151,8 @@
 
     // set the bounds for the R^2 part of SE(2)
     ob::RealVectorBounds bounds(dim);
-    bounds.setLow(-0.5);
-    bounds.setHigh(0.5);
+    bounds.setLow(0);
+    bounds.setHigh(2);
 
     space->setBounds(bounds);
   
@@ -140,14 +170,16 @@
     addPropositions(ptd);
     //ptd->setup();
    
+    //Print the problem
+    printProblem(ptd, length, bounds);
 
     // create a control space
     auto cspace(std::make_shared<oc::RealVectorControlSpace>(space, dim));
 
     // set the bounds for the control space
     ob::RealVectorBounds cbounds(dim);
-    cbounds.setLow(-.5);
-    cbounds.setHigh(.5);
+    cbounds.setLow(-2);
+    cbounds.setHigh(2);
 
     cspace->setBounds(cbounds);
 
@@ -168,7 +200,7 @@
      // This shows off the capability to construct an automaton from LTL-cosafe formula using Spot
      auto cosafety = std::make_shared<oc::Automaton>(3, "! p0 U ((p2 & !p0) & XF p0)");
  #else
-     auto cosafety = oc::Automaton::SequenceAutomaton(3, {2});
+     auto cosafety = oc::Automaton::SequenceAutomaton(3, {0, 1, 2});
  #endif
      //LTL safety avoidance formula: Just visit p1
  #if OMPL_HAVE_SPOT
@@ -176,7 +208,7 @@
      auto safety = std::make_shared<oc::Automaton>(3, "G ! p1", false);
  #else
      //auto safety = oc::Automaton::AvoidanceAutomaton(3, {0});
-     auto safety = oc::Automaton::SequenceAutomaton(3, {1});
+     auto safety = oc::Automaton::AvoidanceAutomaton(3, {3, 4});
  #endif
   
     
@@ -224,9 +256,9 @@
     ob::PlannerStatus solved = ltlPlanner.ob::Planner::solve(10.0);
 
      //DEBUG planner
-    // std::vector<ob::State *> tree;
-    // ltlPlanner.getTree(tree);
-    // std::cout << "Tree size: " << tree.size() << std::endl;
+    //std::vector<ob::State *> tree;
+    //ltlPlanner.getTree(tree);
+    //std::cout << "Tree size: " << tree.size() << std::endl;
     // for (int i = 0; i < 10; i++){
     //     //Get the X and Y coordinates of each state in the tree
     //     const auto* se2 = tree[i]->as<ob::SE2StateSpace::StateType>();
@@ -245,6 +277,19 @@
         // getLowerSolutionPath() projects it down into the original robot state space
         // that we handed to LTLSpaceInformation.
         static_cast<oc::PathControl &>(*pdef->getLowerSolutionPath()).printAsMatrix(std::cout);
+
+        //Open a text file to write the path to
+        std::ofstream myfile;
+
+        //Open the file
+        myfile.open("path.txt");
+
+        //Write the path to the file
+        static_cast<oc::PathControl &>(*pdef->getLowerSolutionPath()).printAsMatrix(myfile);
+
+        //Close the file
+        myfile.close();
+
     }
     else
         std::cout << "No solution found" << std::endl;

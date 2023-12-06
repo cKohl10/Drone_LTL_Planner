@@ -47,3 +47,8 @@ void MyPropDecomposition::addProposition(int propRID)
 {
     propRIDs_.push_back(propRID);
 }
+
+int MyPropDecomposition::getProposition(int index)
+{
+    return propRIDs_[index];
+}

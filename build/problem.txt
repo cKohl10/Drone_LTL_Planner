@@ -1,0 +1,10 @@
+dimensions, 2
+length, 5
+bounds_low, 0
+bounds_high, 2
+propositions, 5
+proposition_0, 3
+proposition_1, 14
+proposition_2, 21
+proposition_3, 7
+proposition_4, 9

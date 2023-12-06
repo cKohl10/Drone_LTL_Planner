@@ -13,6 +13,8 @@ src/MyGridDecomposition.h
 /home/mini/Drone_LTL_Planner/src/MyGridDecomposition.h
 src/MyPropDecomposition.h
 /home/mini/Drone_LTL_Planner/src/MyPropDecomposition.h
+fstream
+-
 
 /home/mini/Drone_LTL_Planner/src/MyGridDecomposition.h
 includeCore.h

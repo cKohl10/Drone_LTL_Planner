@@ -17,6 +17,8 @@ class MyPropDecomposition : public oc::PropositionalDecomposition
 
         void addProposition(int prop);
 
+        int getProposition(int index);
+
     private:
         std::vector<int> propRIDs_;
 };
