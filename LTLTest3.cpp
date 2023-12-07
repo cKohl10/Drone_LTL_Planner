@@ -47,78 +47,24 @@
  // a decomposition is only needed for SyclopRRT and SyclopEST
  // use TriangularDecomp
   
-//  void addPropositions(std::shared_ptr<MyPropDecomposition> &decomp)
-//  {
-//     //Specify the region for each proposition
-//     int p0 = 3;
-//     decomp->addProposition(p0);
+ void addPropositions(std::shared_ptr<MyPropDecomposition> &decomp)
+ {
+    //Specify the region for each proposition
+    int p0 = 3;
+    decomp->addProposition(p0);
 
-//     int p1 = 14;
-//     decomp->addProposition(p1);
+    int p1 = 14;
+    decomp->addProposition(p1);
 
-//     int p2 = 21;
-//     decomp->addProposition(p2);
+    int p2 = 21;
+    decomp->addProposition(p2);
 
-//     int p3 = 7;
-//     decomp->addProposition(p3);
+    int p3 = 7;
+    decomp->addProposition(p3);
 
-//     int p4 = 9;
-//     decomp->addProposition(p4);
-//  }
-
-void addPropositions(std::shared_ptr<MyPropDecomposition> &decomp, int propCount, int safetyCount)
-{
-    std::cout << "Adding propositions..." << std::endl;
-    //Specify the region for each proposition, adds an extra for safety
-    for (int i = 0; i < propCount; i++){
-        // Generate a random RID for the proposition
-        int rid = rand() % decomp->getNumRegions();
-
-        // Generate a random RID for the proposition until the region ID is a free space
-        while(decomp->regionStatus(rid) != -1){
-            rid = rand() % decomp->getNumRegions();
-        }
-
-        std::cout << "Proposition RID: " << rid << std::endl;
-
-        decomp->addProposition(rid, false);
-    }
-
-    std::cout << "Adding safety..." << std::endl;
-    //Specify the region for each proposition, adds an extra for safety
-    for (int i = 0; i < safetyCount; i++){
-        // Generate a random RID for the proposition
-        int rid = rand() % decomp->getNumRegions();
-
-        // Generate a random RID for the proposition until the region ID is a free space
-        while(decomp->regionStatus(rid) != -1){
-            rid = rand() % decomp->getNumRegions();
-        }
-
-        std::cout << "Proposition RID: " << rid << std::endl;
-
-        decomp->addProposition(rid, true);
-    }
-}
-
-void addObstacles(std::shared_ptr<MyPropDecomposition> &decomp, int obstacleCount)
-{
-    std::cout << "Adding obstacles..." << std::endl;
-    //Specify the region for each obstacle
-    for (int i = 0; i < obstacleCount; i++){
-        // Generate a random RID for the obstacle
-        int rid = (rand() % (decomp->getNumRegions()-1)) + 1;
-
-        // Generate a random RID for the obstacle until the region ID is a free space
-        while(decomp->regionStatus(rid) != -1){
-            rid = rand() % (rand() % (decomp->getNumRegions()-1)) + 1;
-        }
-
-        std::cout << "Obstacle RID: " << rid << std::endl;
-
-        decomp->addObstacles(rid);
-    }
-}
+    int p4 = 9;
+    decomp->addProposition(p4);
+ }
   
  /* Returns whether a point (x,y) is within a given polygon.
     We are assuming that the polygon is a axis-aligned rectangle, with vertices stored
@@ -132,32 +78,27 @@ void addObstacles(std::shared_ptr<MyPropDecomposition> &decomp, int obstacleCoun
  /* Our state validity checker queries the decomposition for its obstacles,
     and checks for collisions against them.
     This is to prevent us from having to redefine the obstacles in multiple places. */
-bool isStateValid(
+ bool isStateValid(
     const oc::SpaceInformation *si,
     const std::shared_ptr<oc::PropositionalDecomposition> &decomp,
     const ob::State *state)
-{
+ {
     if (!si->satisfiesBounds(state)){
         //std::cout << "State does not satisfy bounds" << std::endl;
         return false;
     }
-    const auto* se2 = state->as<ob::SE2StateSpace::StateType>();
-
-    //double x = se2->getX();
-    //double y = se2->getY();
-
-    // Check if decomp is of type MyPropDecompositionWithCoordToRegion
-    // auto* gridDecomp = dynamic_cast<MyGridDecomposition*>(decomp.get());
-    // if (gridDecomp) {
-    //     int rid = gridDecomp->locateRegion(se2);
-    //     if (decomp->regionStatus(rid) == 0){
-    //         //std::cout << "State is in an obstacle" << std::endl;
-    //         return false;
-    //     }
-    // }
-
+    //  const auto* se2 = state->as<ob::SE2StateSpace::StateType>();
+  
+    //  double x = se2->getX();
+    //  double y = se2->getY();
+    //  const std::vector<Polygon>& obstacles = decomp->getHoles();
+    //  for (const auto & obstacle : obstacles)
+    //  {
+    //      if (polyContains(obstacle, x, y))
+    //          return false;
+    //  }
     return true;
-}
+ }
   
  void propagate(const ob::State *start, const oc::Control *control, const double duration, ob::State *result)
  {
@@ -194,11 +135,6 @@ bool isStateValid(
         for (int i = 0; i < ptd->getNumProps(); i++){
             myfile << "proposition_" << i << ", " << ptd->getProposition(i) << std::endl;
         }
-        //Add the obstacles
-        myfile << "obstacles, " << ptd->getNumObstacles() << std::endl;
-        for (int i = 0; i < ptd->getNumObstacles(); i++){
-            myfile << "obstacle_" << i << ", " << ptd->getObstacle(i) << std::endl;
-        }
         
         //Close the file
         myfile.close();
@@ -207,11 +143,8 @@ bool isStateValid(
  void plan()
  {
     // Grid Space Parameters
-    int length = 4; // Number of grid cells along each axis
+    int length = 5; // Number of grid cells along each axis
     int dim = 2; // Number of dimensions
-    unsigned int propCount = 2; // Number of propositions
-    unsigned int safetyCount = 1; // Number of safety propositions
-    unsigned int obstacleCount = 1; // Number of obstacles
 
     // construct the state space we are planning in
     auto space(std::make_shared<ob::SE2StateSpace>());
@@ -234,8 +167,7 @@ bool isStateValid(
     std::shared_ptr<MyPropDecomposition> ptd = std::make_shared<MyPropDecomposition>(grid);
 
     // Add the regions of interest to the propositional decomposition
-    addPropositions(ptd, propCount, safetyCount);
-    addObstacles(ptd, obstacleCount);
+    addPropositions(ptd);
     //ptd->setup();
    
     //Print the problem
@@ -261,16 +193,6 @@ bool isStateValid(
 
     si->setStatePropagator(propagate);
     si->setPropagationStepSize(0.025);
-
-    //Make vectors for the propositions to be followed
-    std::vector<unsigned int> p_co;
-    std::vector<unsigned int> p_safe;
-    for (unsigned int i = 0; i < propCount; i++){
-        p_co.push_back(i);
-    }
-    for (unsigned int i = propCount; i < propCount + safetyCount; i++){
-        p_safe.push_back(i);
-    }
   
               
      //LTL co-safety sequencing formula: visit p2, p1 in that order
@@ -278,7 +200,7 @@ bool isStateValid(
      // This shows off the capability to construct an automaton from LTL-cosafe formula using Spot
      auto cosafety = std::make_shared<oc::Automaton>(3, "! p0 U ((p2 & !p0) & XF p0)");
  #else
-     auto cosafety = oc::Automaton::SequenceAutomaton(propCount, p_co);
+     auto cosafety = oc::Automaton::SequenceAutomaton(3, {0, 1, 2});
  #endif
      //LTL safety avoidance formula: Just visit p1
  #if OMPL_HAVE_SPOT
@@ -286,7 +208,7 @@ bool isStateValid(
      auto safety = std::make_shared<oc::Automaton>(3, "G ! p1", false);
  #else
      //auto safety = oc::Automaton::AvoidanceAutomaton(3, {0});
-     auto safety = oc::Automaton::AvoidanceAutomaton(safetyCount, p_safe);
+     auto safety = oc::Automaton::AvoidanceAutomaton(3, {3, 4});
  #endif
   
     
