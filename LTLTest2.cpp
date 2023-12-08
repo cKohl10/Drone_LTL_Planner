@@ -66,7 +66,7 @@
 //     decomp->addProposition(p4);
 //  }
 
-void addPropositions(std::shared_ptr<MyPropDecomposition> &decomp, int propCount, int safetyCount)
+void addPropositions(std::shared_ptr<MyPropDecomposition> &decomp, int propCount, int safetyCount, bool land)
 {
     std::cout << "Adding propositions..." << std::endl;
     //Specify the region for each proposition, adds an extra for safety
@@ -82,6 +82,11 @@ void addPropositions(std::shared_ptr<MyPropDecomposition> &decomp, int propCount
         std::cout << "Proposition RID: " << rid << std::endl;
 
         decomp->addProposition(rid, false);
+    }
+
+    //Go back to the starting base region
+    if (land){
+        decomp->addProposition(0, false);
     }
 
     std::cout << "Adding safety..." << std::endl;
@@ -134,7 +139,7 @@ void addObstacles(std::shared_ptr<MyPropDecomposition> &decomp, int obstacleCoun
     This is to prevent us from having to redefine the obstacles in multiple places. */
 bool isStateValid(
     const oc::SpaceInformation *si,
-    const std::shared_ptr<oc::PropositionalDecomposition> &decomp,
+    const std::shared_ptr<MyPropDecomposition> &decomp,
     const ob::State *state)
 {
     if (!si->satisfiesBounds(state)){
@@ -143,18 +148,14 @@ bool isStateValid(
     }
     const auto* se2 = state->as<ob::SE2StateSpace::StateType>();
 
-    //double x = se2->getX();
-    //double y = se2->getY();
+    double x = se2->getX();
+    double y = se2->getY();
 
-    // Check if decomp is of type MyPropDecompositionWithCoordToRegion
-    // auto* gridDecomp = dynamic_cast<MyGridDecomposition*>(decomp.get());
-    // if (gridDecomp) {
-    //     int rid = gridDecomp->locateRegion(se2);
-    //     if (decomp->regionStatus(rid) == 0){
-    //         //std::cout << "State is in an obstacle" << std::endl;
-    //         return false;
-    //     }
-    // }
+    int rid = decomp->locateRegion(se2);
+    if (decomp->regionStatus(rid) == 0){
+        //std::cout << "State is in an obstacle" << std::endl;
+        return false;
+    }
 
     return true;
 }
@@ -190,8 +191,8 @@ bool isStateValid(
         myfile << "bounds_low, " << bounds.low[0] << std::endl;
         myfile << "bounds_high, " << bounds.high[0] << std::endl;
         //Add the propositions
-        myfile << "propositions, " << ptd->getNumProps() << std::endl;
-        for (int i = 0; i < ptd->getNumProps(); i++){
+        myfile << "propositions, " << ptd->getNumCoSafeProps() << std::endl;
+        for (int i = 0; i < ptd->getNumCoSafeProps(); i++){
             myfile << "proposition_" << i << ", " << ptd->getProposition(i) << std::endl;
         }
         //Add the obstacles
@@ -207,11 +208,13 @@ bool isStateValid(
  void plan()
  {
     // Grid Space Parameters
-    int length = 4; // Number of grid cells along each axis
+    int length = 50; // Number of grid cells along each axis
     int dim = 2; // Number of dimensions
-    unsigned int propCount = 2; // Number of propositions
+    unsigned int propCount = 3; // Number of propositions
+    bool land = true; // Whether or not the drone returns to home base
     unsigned int safetyCount = 1; // Number of safety propositions
-    unsigned int obstacleCount = 1; // Number of obstacles
+    unsigned int obstacleCount = length*length/8; // Number of obstacles
+    double bound_max = 1; // Maximum bound of the grid
 
     // construct the state space we are planning in
     auto space(std::make_shared<ob::SE2StateSpace>());
@@ -219,7 +222,7 @@ bool isStateValid(
     // set the bounds for the R^2 part of SE(2)
     ob::RealVectorBounds bounds(dim);
     bounds.setLow(0);
-    bounds.setHigh(2);
+    bounds.setHigh(bound_max);
 
     space->setBounds(bounds);
   
@@ -234,7 +237,7 @@ bool isStateValid(
     std::shared_ptr<MyPropDecomposition> ptd = std::make_shared<MyPropDecomposition>(grid);
 
     // Add the regions of interest to the propositional decomposition
-    addPropositions(ptd, propCount, safetyCount);
+    addPropositions(ptd, propCount, safetyCount, land);
     addObstacles(ptd, obstacleCount);
     //ptd->setup();
    
@@ -246,8 +249,8 @@ bool isStateValid(
 
     // set the bounds for the control space
     ob::RealVectorBounds cbounds(dim);
-    cbounds.setLow(-2);
-    cbounds.setHigh(2);
+    cbounds.setLow(-1);
+    cbounds.setHigh(1);
 
     cspace->setBounds(cbounds);
 
@@ -260,7 +263,12 @@ bool isStateValid(
         });
 
     si->setStatePropagator(propagate);
-    si->setPropagationStepSize(0.025);
+    si->setPropagationStepSize(0.01);
+
+    // Add the landing proposition if the drone is returning to home base
+    if (land){
+        propCount++;
+    }
 
     //Make vectors for the propositions to be followed
     std::vector<unsigned int> p_co;
@@ -278,6 +286,7 @@ bool isStateValid(
      // This shows off the capability to construct an automaton from LTL-cosafe formula using Spot
      auto cosafety = std::make_shared<oc::Automaton>(3, "! p0 U ((p2 & !p0) & XF p0)");
  #else
+    // Visit all the targets in order, +1 makes the drone go back to base
      auto cosafety = oc::Automaton::SequenceAutomaton(propCount, p_co);
  #endif
      //LTL safety avoidance formula: Just visit p1
@@ -312,8 +321,8 @@ bool isStateValid(
 
     // create a start state
     ob::ScopedState<ob::SE2StateSpace> start(space);
-    start->setX(0.2);
-    start->setY(0.2);
+    start->setX(bound_max / (2*length));
+    start->setY(bound_max / (2*length));
     start->setYaw(0.0);
 
     // addLowerStartState accepts a state in lower space, expands it to its
@@ -331,7 +340,7 @@ bool isStateValid(
     ltlPlanner.printProperties(std::cout);
     ltlPlanner.printSettings(std::cout);
     ltlPlanner.checkValidity();
-    ob::PlannerStatus solved = ltlPlanner.ob::Planner::solve(10.0);
+    ob::PlannerStatus solved = ltlPlanner.ob::Planner::solve(30.0);
 
      //DEBUG planner
     //std::vector<ob::State *> tree;

@@ -15,6 +15,8 @@ class MyPropDecomposition : public oc::PropositionalDecomposition
 
         int getNumProps() const override;
 
+        int getNumCoSafeProps() const;
+
         std::vector<unsigned int> getPropositions(bool isSafety);
 
         // Add a proposition to the list of propositions region ids

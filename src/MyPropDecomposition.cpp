@@ -45,6 +45,11 @@ int MyPropDecomposition::getNumProps() const
     return propRIDs_.size();
 }   
 
+int MyPropDecomposition::getNumCoSafeProps() const
+{
+    return numCoSafeProps_;
+}  
+
 std::vector<unsigned int> MyPropDecomposition::getPropositions(bool isSafety)
 {
     if (!isSafety)
