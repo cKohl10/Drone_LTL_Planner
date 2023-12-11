@@ -103,6 +103,32 @@ int MyPropDecomposition::regionStatus(int rid)
             return 0;
     }
 
+    // Check if region is the neighbor to an obstacle
+    std::vector<int> neighbors;
+    decomp_->getNeighbors(rid, neighbors);
+    for (int i = 0; i < neighbors.size(); ++i)
+    {
+        for (int j = 0; j < obRIDs_.size(); ++j)
+        {
+            if (neighbors[i] == obRIDs_[j])
+                return -2;
+        }
+    }
+
     // Otherwise, return -1
     return -1;
+}
+
+std::vector<int> MyPropDecomposition::getGridCoord(int rid, int length)
+{
+    std::vector<int> coord;
+
+    coord.resize(decomp_->getDimension());
+    for (int i = decomp_->getDimension() - 1; i >= 0; --i)
+    {
+        int remainder = rid % length;
+        coord[i] = remainder;
+        rid /= length;
+    }
+    return coord;
 }

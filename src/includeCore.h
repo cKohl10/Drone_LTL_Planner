@@ -14,3 +14,6 @@
  #include <ompl/control/planners/ltl/ProductGraph.h>
  #include <ompl/control/planners/ltl/LTLPlanner.h>
  #include <ompl/control/planners/ltl/LTLProblemDefinition.h>
+
+//Include opencv
+ #include <opencv2/opencv.hpp>

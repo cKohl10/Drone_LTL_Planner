@@ -14,6 +14,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/local/include/ompl-1.6"
   "/usr/include/eigen3"
   "/home/mini/triangle"
+  "/usr/include/opencv4"
   "../src"
   )
 

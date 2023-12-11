@@ -1,5 +1,6 @@
 #pragma once
 #include "includeCore.h"
+#include <fstream> // Add this line
 
 namespace ob = ompl::base;
 namespace oc = ompl::control;
@@ -8,6 +9,9 @@ class MyGridDecomposition : public oc::GridDecomposition
 {
     public:
         MyGridDecomposition(int len, int dim, const ob::RealVectorBounds &b);
+
+        // This constructor takes in a image and creates a grid decomposition based on the image
+        MyGridDecomposition(std::string image_path);
 
         ~MyGridDecomposition() override = default;
   
@@ -22,4 +26,8 @@ class MyGridDecomposition : public oc::GridDecomposition
          * @brief Prints the grid decomposition.
          */
         void print();
+
+    private:
+        //Create log file for tree
+        mutable std::ofstream tree_log;
 };

@@ -3,16 +3,16 @@
 MyGridDecomposition::MyGridDecomposition(int len, int dim, const ob::RealVectorBounds &b)
     : oc::GridDecomposition(len, dim, b) 
 {
-    // Constructor implementation...
+    // Open tree log so each step can be saved when project is called
+    tree_log.open("tree_log.txt");
 }
-
 
 void MyGridDecomposition::project(const ob::State* s, std::vector<double>& coord) const
 {
     coord.resize(2);
     coord[0] = s->as<ob::SE2StateSpace::StateType>()->getX();
     coord[1] = s->as<ob::SE2StateSpace::StateType>()->getY();
-    //std::cout << "Projecting state: " << coord[0] << ", " << coord[1] << " in region: " << coordToRegion(coord) <<std::endl;
+    tree_log << coord[0] << ", " << coord[1] <<std::endl;
 }
 
 void MyGridDecomposition::sampleFullState(const ob::StateSamplerPtr& sampler, const std::vector<double>& coord, ob::State* s) const

@@ -6,5 +6,5 @@ CXX_FLAGS =
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/local/include/ompl-1.6 -I/usr/include/eigen3 -I/home/mini/triangle -I/home/mini/Drone_LTL_Planner/src 
+CXX_INCLUDES = -I/usr/local/include/ompl-1.6 -I/usr/include/eigen3 -I/home/mini/triangle -I/home/mini/Drone_LTL_Planner/src -isystem /usr/include/opencv4 
 

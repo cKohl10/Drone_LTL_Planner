@@ -386,6 +386,28 @@ bool isStateValid(
   
  int main(int /*argc*/, char ** /*argv*/)
  {
+
+    std::ifstream inputFile("path.txt"); // Replace "your_file.txt" with the actual file name
+
+    if (!inputFile.is_open()) {
+        std::cerr << "Error opening the file.\n";
+        return 1;
+    }
+
+    std::vector<double> xValues, yValues, yawAngles;
+    double x, y, yaw, NaN1, NaN2, NaN3;
+
+    while (inputFile >> x >> y >> yaw >> NaN1 >> NaN2 >> NaN3) {
+
+    	xValues.push_back(x);
+    	yValues.push_back(y);
+    	yawAngles.push_back(yaw);
+
+    }
+
+    inputFile.close();
+
+
      plan();
      return 0;
  }

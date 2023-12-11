@@ -136,32 +136,32 @@ helper_functions/fast:
 	$(MAKE) -f CMakeFiles/helper_functions.dir/build.make CMakeFiles/helper_functions.dir/build
 .PHONY : helper_functions/fast
 
-LTLTest2.o: LTLTest2.cpp.o
+main.o: main.cpp.o
 
-.PHONY : LTLTest2.o
+.PHONY : main.o
 
 # target to build an object file
-LTLTest2.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/LTLTest2.cpp.o
-.PHONY : LTLTest2.cpp.o
+main.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.o
+.PHONY : main.cpp.o
 
-LTLTest2.i: LTLTest2.cpp.i
+main.i: main.cpp.i
 
-.PHONY : LTLTest2.i
+.PHONY : main.i
 
 # target to preprocess a source file
-LTLTest2.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/LTLTest2.cpp.i
-.PHONY : LTLTest2.cpp.i
+main.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.i
+.PHONY : main.cpp.i
 
-LTLTest2.s: LTLTest2.cpp.s
+main.s: main.cpp.s
 
-.PHONY : LTLTest2.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-LTLTest2.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/LTLTest2.cpp.s
-.PHONY : LTLTest2.cpp.s
+main.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
+.PHONY : main.cpp.s
 
 src/MyGridDecomposition.o: src/MyGridDecomposition.cpp.o
 
@@ -227,9 +227,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... main"
 	@echo "... helper_functions"
-	@echo "... LTLTest2.o"
-	@echo "... LTLTest2.i"
-	@echo "... LTLTest2.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 	@echo "... src/MyGridDecomposition.o"
 	@echo "... src/MyGridDecomposition.i"
 	@echo "... src/MyGridDecomposition.s"

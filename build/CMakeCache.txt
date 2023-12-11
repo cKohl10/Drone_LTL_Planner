@@ -227,11 +227,11 @@ OMPL_LIBRARIES:FILEPATH=/usr/local/lib/libompl.so
 //Library path for OMPL and its dependencies
 OMPL_LIBRARY_DIRS:STRING=/usr/local/lib;/usr/lib/x86_64-linux-gnu
 
-//No help, variable specified on the command line.
-SOURCE_FILE:UNINITIALIZED=LTLTest2.cpp
+//The directory containing a CMake configuration file for OpenCV.
+OpenCV_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/opencv4
 
-//Path to a library.
-TRIANGLE_LIBRARY:FILEPATH=TRIANGLE_LIBRARY-NOTFOUND
+//No help, variable specified on the command line.
+SOURCE_FILE:UNINITIALIZED=main.cpp
 
 //Value Computed by CMake
 main_BINARY_DIR:STATIC=/home/mini/Drone_LTL_Planner/build
@@ -390,6 +390,8 @@ CMAKE_STRIP-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding OpenCV
+FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/usr][v4.2.0()]
 //Details about finding ompl
 FIND_PACKAGE_MESSAGE_DETAILS_ompl:INTERNAL=[/usr/local/include/ompl-1.6;/usr/include;/usr/include/eigen3;/home/mini/triangle][/usr/local/lib;/usr/lib/x86_64-linux-gnu][/usr/local/lib/libompl.so;/usr/lib/x86_64-linux-gnu/libboost_serialization.so;/usr/lib/x86_64-linux-gnu/libboost_filesystem.so;/usr/lib/x86_64-linux-gnu/libboost_system.so;ode][v()]
 

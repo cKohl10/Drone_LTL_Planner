@@ -40,6 +40,8 @@ class MyPropDecomposition : public oc::PropositionalDecomposition
         // Returns -1 if the region is neither
         int regionStatus(int rid);
 
+        std::vector<int> getGridCoord(int rid, int length);
+
     private:
         int numCoSafeProps_;
         int numSafeProps_;
