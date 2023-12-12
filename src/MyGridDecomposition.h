@@ -10,9 +10,6 @@ class MyGridDecomposition : public oc::GridDecomposition
     public:
         MyGridDecomposition(int len, int dim, const ob::RealVectorBounds &b);
 
-        // This constructor takes in a image and creates a grid decomposition based on the image
-        MyGridDecomposition(std::string image_path);
-
         ~MyGridDecomposition() override = default;
   
         /** \brief Project a given State to a set of coordinates in R^k, where k is the dimension of this

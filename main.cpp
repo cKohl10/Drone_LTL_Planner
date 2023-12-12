@@ -178,6 +178,23 @@ void addPropositions(std::shared_ptr<MyPropDecomposition> &decomp, int propCount
     }
 }
 
+//Specific propositions for the forest map low
+void specificProps(std::shared_ptr<MyPropDecomposition> &decomp, unsigned int &propCount, bool land){
+    decomp->addProposition(296, false);
+    decomp->addProposition(835, false);
+    decomp->addProposition(782, false);
+
+    propCount = 3;
+
+    //Go back to the starting base region
+    if (land){
+        decomp->addProposition(0, false);
+    }
+
+    decomp->addProposition(427, true);
+
+}
+
 void addObstacles(std::shared_ptr<MyPropDecomposition> &decomp, int obstacleCount)
 {
     std::cout << "Adding obstacles..." << std::endl;
@@ -239,8 +256,8 @@ void addImageObstacles(std::shared_ptr<MyPropDecomposition> &decomp, cv::Mat ima
                 ob::ScopedState<ob::SE2StateSpace> state(space);
 
                 //Convert pixel to state
-                double x_coord = double(j)/image.cols;
-                double y_coord = double(i)/image.rows;
+                double x_coord = double(i)/image.cols;
+                double y_coord = double(j)/image.rows;
 
                 state->setX(x_coord);
                 state->setY(y_coord);
@@ -309,14 +326,14 @@ bool isStateValid(
     }
 
     //Check if the state neighbors are obstacles
-    // std::vector<int> neighbors;
-    // decomp->getNeighbors(rid, neighbors);
-    // for (int i = 0; i < neighbors.size(); i++){
-    //     if (decomp->regionStatus(neighbors[i]) == 0){
-    //         //std::cout << "State is in an obstacle" << std::endl;
-    //         return false;
-    //     }
-    // }
+    std::vector<int> neighbors;
+    decomp->getNeighbors(rid, neighbors);
+    for (int i = 0; i < neighbors.size(); i++){
+        if (decomp->regionStatus(neighbors[i]) == 0){
+            //std::cout << "State is in an obstacle" << std::endl;
+            return false;
+        }
+    }
 
     return true;
 }
@@ -374,7 +391,7 @@ bool isStateValid(
     // Grid Space Parameters
     int length = 20; // Number of grid cells along each axis
     int dim = 2; // Number of dimensions
-    unsigned int propCount = 1; // Number of propositions
+    unsigned int propCount = 2; // Number of propositions
     unsigned int safetyCount = 1; // Number of safety propositions
     unsigned int obstacleCount = 5; //(length*length)/10; // Number of obstacles
     double bound_max = 1; // Maximum bound of the grid
@@ -382,7 +399,7 @@ bool isStateValid(
 
     bool land = true; // Whether or not the drone returns to home base
     bool useImageMap = true; // Whether or not to use an image map
-    std::string image_path = "/home/mini/Drone_LTL_Planner/maps/Forest_Map_Med.jpg"; // Path to the image map
+    std::string image_path = "/home/mini/Drone_LTL_Planner/maps/Forest_Map_Low_1.jpg"; // Path to the image map
     cv::Mat image; // Image map 
 
     //If we are using an image map, use the image map
@@ -427,7 +444,8 @@ bool isStateValid(
     //If an image was use, set any pixel that is not white as an obstacle
     if (useImageMap){
         addImageObstacles(ptd, image, space);
-        addPropositions(ptd, propCount, safetyCount, land);
+        //addPropositions(ptd, propCount, safetyCount, land);
+        specificProps(ptd, propCount, land);
     } else{
 
         // Add the regions of interest to the propositional decomposition

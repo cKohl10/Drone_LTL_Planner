@@ -42,6 +42,8 @@ class MyPropDecomposition : public oc::PropositionalDecomposition
 
         std::vector<int> getGridCoord(int rid, int length);
 
+        // Create a grid 
+
     private:
         int numCoSafeProps_;
         int numSafeProps_;
