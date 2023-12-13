@@ -5,6 +5,7 @@ CMakeFiles/main.dir/main.cpp.o
  /home/mini/Drone_LTL_Planner/main.cpp
  /home/mini/Drone_LTL_Planner/src/MyGridDecomposition.h
  /home/mini/Drone_LTL_Planner/src/MyPropDecomposition.h
+ /home/mini/Drone_LTL_Planner/src/helperFunctions.h
  /home/mini/Drone_LTL_Planner/src/includeCore.h
  /usr/include/eigen3/Eigen/Core
  /usr/include/eigen3/Eigen/src/Core/Array.h

@@ -4,6 +4,7 @@
 CMakeFiles/main.dir/main.cpp.o: ../main.cpp
 CMakeFiles/main.dir/main.cpp.o: ../src/MyGridDecomposition.h
 CMakeFiles/main.dir/main.cpp.o: ../src/MyPropDecomposition.h
+CMakeFiles/main.dir/main.cpp.o: ../src/helperFunctions.h
 CMakeFiles/main.dir/main.cpp.o: ../src/includeCore.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/main.dir/main.cpp.o: /usr/include/eigen3/Eigen/src/Core/Array.h
