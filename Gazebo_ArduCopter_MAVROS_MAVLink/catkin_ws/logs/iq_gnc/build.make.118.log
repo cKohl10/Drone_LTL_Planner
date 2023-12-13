@@ -1,0 +1,8 @@
+[35m[1mScanning dependencies of target LTLForest[0m
+[ 80%] Built target gnc_example
+[ 80%] Built target square
+[ 80%] Built target firstTest
+[ 80%] Built target set_wp
+[ 90%] [32mBuilding CXX object CMakeFiles/LTLForest.dir/src/LTLForest.cpp.o[0m
+[100%] [32m[1mLinking CXX executable /home/mini/catkin_ws/devel/.private/iq_gnc/lib/iq_gnc/LTLForest[0m
+[100%] Built target LTLForest

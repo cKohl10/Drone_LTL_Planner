@@ -1,0 +1,22 @@
+[31m[1mCMake Error[0m at /usr/share/cmake-3.16/Modules/CMakeTestCCompiler.cmake:60 (message):
+  The C compiler
+
+    "/usr/lib/ccache/cc"
+
+  is not able to compile a simple test program.
+
+  It fails with the following output:
+
+    Change Dir: /home/mini/catkin_ws/build/iq_gnc/CMakeFiles/CMakeTmp
+
+    Run Build Command(s):/usr/bin/make cmTC_2e585/fast && make: *** No rule to make target 'cmTC_2e585/fast'.  Stop.
+
+
+
+
+
+  CMake will not be able to correctly generate this project.
+[36mCall Stack (most recent call first):[0m
+  CMakeLists.txt:2 (project)
+
+

@@ -1,0 +1,99 @@
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:80:32: error: ‘PoseStamped’ is not a member of ‘geometry_msgs’
+   80 |     std::vector<geometry_msgs::PoseStamped> data_vector;
+      |                                ^~~~~~~~~~~
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:80:32: error: ‘PoseStamped’ is not a member of ‘geometry_msgs’
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:80:43: error: template argument 1 is invalid
+   80 |     std::vector<geometry_msgs::PoseStamped> data_vector;
+      |                                           ^
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:80:43: error: template argument 2 is invalid
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp: In member function ‘void DataCollector::callback(const ConstPtr&)’:
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:32:13: error: ‘PoseStamped’ was not declared in this scope
+   32 |             PoseStamped pose_stamped;
+      |             ^~~~~~~~~~~
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:34:13: error: ‘pose_stamped’ was not declared in this scope
+   34 |             pose_stamped.header = data->header;
+      |             ^~~~~~~~~~~~
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:34:41: error: ‘const struct gazebo_msgs::ModelStates_<std::allocator<void> >’ has no member named ‘header’
+   34 |             pose_stamped.header = data->header;
+      |                                         ^~~~~~
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:37:25: error: request for member ‘push_back’ in ‘((DataCollector*)this)->DataCollector::data_vector’, which is of non-class type ‘int’
+   37 |             data_vector.push_back(pose_stamped);
+      |                         ^~~~~~~~~
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp: In member function ‘void DataCollector::saveDataPeriodically()’:
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:61:45: error: ‘begin’ was not declared in this scope
+   61 |             for (const auto& pose_stamped : data_vector) {
+      |                                             ^~~~~~~~~~~
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:61:45: note: suggested alternatives:
+In file included from /usr/include/c++/9/string:54,
+                 from /opt/ros/noetic/include/ros/platform.h:38,
+                 from /opt/ros/noetic/include/ros/time.h:53,
+                 from /opt/ros/noetic/include/ros/ros.h:38,
+                 from /home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:1:
+/usr/include/c++/9/bits/range_access.h:105:37: note:   ‘std::begin’
+  105 |   template<typename _Tp> const _Tp* begin(const valarray<_Tp>&);
+      |                                     ^~~~~
+In file included from /usr/include/boost/mpl/list/aux_/begin_end.hpp:17,
+                 from /usr/include/boost/mpl/list/list0.hpp:27,
+                 from /usr/include/boost/mpl/list/list10.hpp:18,
+                 from /usr/include/boost/mpl/list/list20.hpp:18,
+                 from /usr/include/boost/mpl/list.hpp:36,
+                 from /usr/include/boost/math/policies/policy.hpp:9,
+                 from /usr/include/boost/math/policies/error_handling.hpp:21,
+                 from /usr/include/boost/math/special_functions/round.hpp:14,
+                 from /opt/ros/noetic/include/ros/time.h:58,
+                 from /opt/ros/noetic/include/ros/ros.h:38,
+                 from /home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:1:
+/usr/include/boost/mpl/begin_end_fwd.hpp:22:38: note:   ‘boost::mpl::begin’
+   22 | template< typename Sequence > struct begin;
+      |                                      ^~~~~
+In file included from /usr/include/boost/range/functions.hpp:18,
+                 from /usr/include/boost/range/iterator_range_core.hpp:38,
+                 from /usr/include/boost/lexical_cast.hpp:30,
+                 from /opt/ros/noetic/include/ros/transport_hints.h:34,
+                 from /opt/ros/noetic/include/ros/subscribe_options.h:33,
+                 from /opt/ros/noetic/include/ros/node_handle.h:42,
+                 from /opt/ros/noetic/include/ros/ros.h:45,
+                 from /home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:1:
+/usr/include/boost/range/begin.hpp:114:61: note:   ‘boost::range_adl_barrier::begin’
+  114 | inline BOOST_DEDUCED_TYPENAME range_iterator<const T>::type begin( const T& r )
+      |                                                             ^~~~~
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:61:45: error: ‘end’ was not declared in this scope
+   61 |             for (const auto& pose_stamped : data_vector) {
+      |                                             ^~~~~~~~~~~
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:61:45: note: suggested alternatives:
+In file included from /usr/include/c++/9/string:54,
+                 from /opt/ros/noetic/include/ros/platform.h:38,
+                 from /opt/ros/noetic/include/ros/time.h:53,
+                 from /opt/ros/noetic/include/ros/ros.h:38,
+                 from /home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:1:
+/usr/include/c++/9/bits/range_access.h:107:37: note:   ‘std::end’
+  107 |   template<typename _Tp> const _Tp* end(const valarray<_Tp>&);
+      |                                     ^~~
+In file included from /usr/include/boost/mpl/list/aux_/begin_end.hpp:17,
+                 from /usr/include/boost/mpl/list/list0.hpp:27,
+                 from /usr/include/boost/mpl/list/list10.hpp:18,
+                 from /usr/include/boost/mpl/list/list20.hpp:18,
+                 from /usr/include/boost/mpl/list.hpp:36,
+                 from /usr/include/boost/math/policies/policy.hpp:9,
+                 from /usr/include/boost/math/policies/error_handling.hpp:21,
+                 from /usr/include/boost/math/special_functions/round.hpp:14,
+                 from /opt/ros/noetic/include/ros/time.h:58,
+                 from /opt/ros/noetic/include/ros/ros.h:38,
+                 from /home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:1:
+/usr/include/boost/mpl/begin_end_fwd.hpp:23:38: note:   ‘boost::mpl::end’
+   23 | template< typename Sequence > struct end;
+      |                                      ^~~
+In file included from /usr/include/boost/range/functions.hpp:19,
+                 from /usr/include/boost/range/iterator_range_core.hpp:38,
+                 from /usr/include/boost/lexical_cast.hpp:30,
+                 from /opt/ros/noetic/include/ros/transport_hints.h:34,
+                 from /opt/ros/noetic/include/ros/subscribe_options.h:33,
+                 from /opt/ros/noetic/include/ros/node_handle.h:42,
+                 from /opt/ros/noetic/include/ros/ros.h:45,
+                 from /home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:1:
+/usr/include/boost/range/end.hpp:108:61: note:   ‘boost::range_adl_barrier::end’
+  108 | inline BOOST_DEDUCED_TYPENAME range_iterator<const T>::type end( const T& r )
+      |                                                             ^~~
+make[2]: *** [CMakeFiles/true_path_log_2.dir/build.make:63: CMakeFiles/true_path_log_2.dir/src/new_path.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:180: CMakeFiles/true_path_log_2.dir/all] Error 2
+make: *** [Makefile:141: all] Error 2

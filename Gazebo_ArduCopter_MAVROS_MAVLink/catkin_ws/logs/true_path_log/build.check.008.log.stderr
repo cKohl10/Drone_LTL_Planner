@@ -1,0 +1,8 @@
+[31m[1mCMake Error[0m at /home/mini/catkin_ws/src/true_path_log/CMakeLists.txt:23 (add_executable):
+  add_executable cannot create target "true_path_log" because another target
+  with the same name already exists.  The existing target is an executable
+  created in source directory "/home/mini/catkin_ws/src/true_path_log".  See
+  documentation for policy CMP0002 for more details.
+
+
+make: *** [Makefile:644: cmake_check_build_system] Error 1

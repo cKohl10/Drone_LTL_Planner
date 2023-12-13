@@ -1,0 +1,18 @@
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp: In member function ‘void DataCollector::callback(const ConstPtr&)’:
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:34:13: error: ‘PoseStamped’ was not declared in this scope; did you mean ‘geometry_msgs::PoseStamped’?
+   34 |             PoseStamped pose_stamped;
+      |             ^~~~~~~~~~~
+      |             geometry_msgs::PoseStamped
+In file included from /home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:7:
+/opt/ros/noetic/include/geometry_msgs/PoseStamped.h:55:62: note: ‘geometry_msgs::PoseStamped’ declared here
+   55 | typedef ::geometry_msgs::PoseStamped_<std::allocator<void> > PoseStamped;
+      |                                                              ^~~~~~~~~~~
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:36:13: error: ‘pose_stamped’ was not declared in this scope
+   36 |             pose_stamped.header = data->header;
+      |             ^~~~~~~~~~~~
+/home/mini/catkin_ws/src/true_path_log_2/src/new_path.cpp:36:41: error: ‘const struct gazebo_msgs::ModelStates_<std::allocator<void> >’ has no member named ‘header’
+   36 |             pose_stamped.header = data->header;
+      |                                         ^~~~~~
+make[2]: *** [CMakeFiles/true_path_log_2.dir/build.make:63: CMakeFiles/true_path_log_2.dir/src/new_path.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:180: CMakeFiles/true_path_log_2.dir/all] Error 2
+make: *** [Makefile:141: all] Error 2

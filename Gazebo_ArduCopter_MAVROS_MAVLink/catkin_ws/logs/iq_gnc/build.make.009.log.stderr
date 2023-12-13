@@ -1,0 +1,22 @@
+/home/mini/catkin_ws/src/iq_gnc/src/square.cpp: In function ‘int main(int, char**)’:
+/home/mini/catkin_ws/src/iq_gnc/src/square.cpp:67:31: error: too few arguments to function ‘int check_waypoint_reached(float, float)’
+   67 |   if(check_waypoint_reached(.3) == 1)
+      |                               ^
+In file included from /home/mini/catkin_ws/src/iq_gnc/src/square.cpp:1:
+/home/mini/catkin_ws/src/iq_gnc/include/gnc_functions.hpp:396:5: note: declared here
+  396 | int check_waypoint_reached(float pos_tolerance, float heading_tolerance)
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/square.dir/build.make:63: CMakeFiles/square.dir/src/square.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:244: CMakeFiles/square.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+/home/mini/catkin_ws/src/iq_gnc/src/gnc_tutorial.cpp: In function ‘int main(int, char**)’:
+/home/mini/catkin_ws/src/iq_gnc/src/gnc_tutorial.cpp:67:31: error: too few arguments to function ‘int check_waypoint_reached(float, float)’
+   67 |   if(check_waypoint_reached(.3) == 1)
+      |                               ^
+In file included from /home/mini/catkin_ws/src/iq_gnc/src/gnc_tutorial.cpp:1:
+/home/mini/catkin_ws/src/iq_gnc/include/gnc_functions.hpp:396:5: note: declared here
+  396 | int check_waypoint_reached(float pos_tolerance, float heading_tolerance)
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/gnc_example.dir/build.make:63: CMakeFiles/gnc_example.dir/src/gnc_tutorial.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:1675: CMakeFiles/gnc_example.dir/all] Error 2
+make: *** [Makefile:141: all] Error 2

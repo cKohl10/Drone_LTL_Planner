@@ -1,0 +1,1 @@
+#define MAVLINK_VERSION "2023.9.9"

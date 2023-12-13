@@ -1,0 +1,1 @@
+/home/mini/catkin_ws/devel/.private/true_path_log/share/true_path_log/cmake/true_path_logConfig-version.cmake

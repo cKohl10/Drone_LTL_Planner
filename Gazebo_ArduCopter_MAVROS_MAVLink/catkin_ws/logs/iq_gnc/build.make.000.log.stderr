@@ -1,0 +1,14 @@
+[01m[K/home/mini/catkin_ws/src/iq_gnc/src/avoidance_sol.cpp:2:10:[m[K [01;31m[Kfatal error: [m[Kdarknet_ros_msgs/BoundingBoxes.h: No such file or directory
+    2 | #include [01;31m[K<darknet_ros_msgs/BoundingBoxes.h>[m[K
+      |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+make[2]: *** [CMakeFiles/avoidance_sol.dir/build.make:63: CMakeFiles/avoidance_sol.dir/src/avoidance_sol.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:248: CMakeFiles/avoidance_sol.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+[01m[K/home/mini/catkin_ws/src/iq_gnc/src/subscriber_sol.cpp:2:10:[m[K [01;31m[Kfatal error: [m[Kdarknet_ros_msgs/BoundingBoxes.h: No such file or directory
+    2 | #include [01;31m[K<darknet_ros_msgs/BoundingBoxes.h>[m[K
+      |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+make[2]: *** [CMakeFiles/sub_sol.dir/build.make:63: CMakeFiles/sub_sol.dir/src/subscriber_sol.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:1247: CMakeFiles/sub_sol.dir/all] Error 2
+make: *** [Makefile:141: all] Error 2

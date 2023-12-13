@@ -1,0 +1,1 @@
+/home/mini/catkin_ws/devel/.private/true_path_log/lib/pkgconfig/true_path_log.pc

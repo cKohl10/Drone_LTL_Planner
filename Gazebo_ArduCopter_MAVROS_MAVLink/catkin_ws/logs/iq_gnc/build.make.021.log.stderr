@@ -1,0 +1,7 @@
+/home/mini/catkin_ws/src/iq_gnc/src/LTLForest.cpp: In function ‘int main(int, char**)’:
+/home/mini/catkin_ws/src/iq_gnc/src/LTLForest.cpp:26:26: error: ‘path’ was not declared in this scope
+   26 |  std::ifstream inputFile(path.txt); // Replace "your_file.txt" with the actual file name
+      |                          ^~~~
+make[2]: *** [CMakeFiles/LTLForest.dir/build.make:63: CMakeFiles/LTLForest.dir/src/LTLForest.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:219: CMakeFiles/LTLForest.dir/all] Error 2
+make: *** [Makefile:141: all] Error 2

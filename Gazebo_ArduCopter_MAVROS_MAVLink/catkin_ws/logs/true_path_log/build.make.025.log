@@ -1,0 +1,4 @@
+[35m[1mScanning dependencies of target true_path_log[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/true_path_log.dir/src/true_path.cpp.o[0m
+[100%] [32m[1mLinking CXX executable /home/mini/catkin_ws/devel/.private/true_path_log/lib/true_path_log/true_path_log[0m
+[100%] Built target true_path_log

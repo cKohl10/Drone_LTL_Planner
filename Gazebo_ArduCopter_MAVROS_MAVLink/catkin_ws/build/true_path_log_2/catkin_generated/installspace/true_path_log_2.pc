@@ -1,0 +1,8 @@
+prefix=/home/mini/catkin_ws/install
+
+Name: true_path_log_2
+Description: Description of true_path_log_2
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -ltrue_path_log
+Requires: roscpp geometry_msgs
